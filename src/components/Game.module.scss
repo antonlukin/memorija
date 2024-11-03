@@ -1,0 +1,12 @@
+.game {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  height: 100%;
+  width: 22.75rem;
+  max-width: 100%;
+  margin: 0 auto;
+}

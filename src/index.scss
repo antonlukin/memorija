@@ -1,0 +1,47 @@
+:root {
+  --color-primary: #FFAA5A;
+  --color-secondary: #FF785A;
+  --color-title: #DDDDDD;
+  --color-text: #191919;
+  --color-background: #191919;
+}
+
+// :root {
+//   --color-primary: #255C99;
+//   --color-secondary: #B3001B;
+//   --color-title: #DDDDDD;
+//   --color-text: #DDDDDD;
+//   --color-background: #262626;
+// }
+
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font: 500 16px/1.5 'Rubik', sans-serif;
+
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+#root {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 32rem;
+  margin: 0 auto;
+
+  padding: 2rem 1rem 4rem;
+  font-size: 1.125rem;
+}

@@ -1,0 +1,54 @@
+.welcome {
+  display: block;
+  position: relative;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.title {
+  display: block;
+  width: 100%;
+  margin: 0 0 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  user-select: none;
+
+  color: var(--color-title);
+}
+
+.button {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  cursor: pointer;
+
+  width: 10rem;
+  height: 10rem;
+  padding: 1rem;
+
+  font-family: inherit;
+  font-size: 1.125rem;
+
+  color: var(--color-text);
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 0.5rem;
+
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: var(--color-secondary);
+  }
+
+  svg {
+    display: block;
+    width: 40%;
+    height: auto;
+  }
+}
