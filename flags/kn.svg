@@ -1,25 +1,14 @@
-<!DOCTYPE svg>
-<svg width="900" xmlns="http://www.w3.org/2000/svg" height="600" viewBox="-75 -50 150 100" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs>
-<clipPath id="frame">
-<path d="m-75-50h150v100h-150z"/>
-</clipPath>
-</defs>
-<path fill="#009e49" d="m75-50h-150v100"/>
-<path fill="#ce1126" d="m-75,50h150v-100"/>
-<g clip-path="url(#frame)">
-<path stroke="#fcd116" stroke-width="42" d="m-75,50l150-100"/>
-<path stroke="#000" stroke-width="30" d="m-75,50l150-100"/>
-</g>
-<g fill="#fff" id="star" transform="matrix(11.64871 -7.76579 7.76579 11.64871 28.5 -19)">
-<g id="cone">
-<path id="triangle" d="m0,0 0,1 .5,0z" transform="matrix(.95106 .30902 -.30902 .95106 0 -1)"/>
-<use xlink:href="#triangle" transform="scale(-1 1)"/>
-</g>
-<use xlink:href="#cone" transform="rotate(72)"/>
-<use xlink:href="#cone" transform="matrix(.30902 -.95106 .95106 .30902 0 0)"/>
-<use xlink:href="#cone" transform="rotate(144)"/>
-<use xlink:href="#cone" transform="matrix(-.80902 -.58779 .58779 -.80902 0 0)"/>
-</g>
-<use xlink:href="#star" transform="translate(-57 38)"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-kn" viewBox="0 0 640 480">
+  <defs>
+    <clipPath id="kn-a">
+      <path fill-opacity=".7" d="M-80.1 0h682.7v512H-80.1z"/>
+    </clipPath>
+  </defs>
+  <g fill-rule="evenodd" clip-path="url(#kn-a)" transform="translate(75.1)scale(.9375)">
+    <path fill="#ffe900" d="M-107.8.2h737.6v511.3h-737.6z"/>
+    <path fill="#35a100" d="m-108.2.2.8 368.6L466.6 0z"/>
+    <path fill="#c70000" d="m630.7 511.5-1.4-383.2-579 383.5z"/>
+    <path fill="#000001" d="m-107.9 396.6.5 115.4 125.3-.2 611.7-410.1L629 1.4 505.2.2z"/>
+    <path fill="#fff" d="m380.4 156.6-9.8-42.2 33.3 27 38-24.6-17.4 41.3 33.4 27-44.2-1.5-17.3 41.3-9.9-42.2-44.1-1.5zm-275.2 179-9.9-42.3 33.3 27 38-24.6-17.4 41.3 33.4 27-44.1-1.5-17.4 41.3-9.8-42.2-44.1-1.5z"/>
+  </g>
 </svg>

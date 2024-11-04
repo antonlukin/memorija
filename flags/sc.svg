@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" xmlns:xlink="http://www.w3.org/1999/xlink">
-<path fill="#d62828" d="m0,0h900v450h-900z"/>
-<path fill="#fcd856" d="m0,0h600l-600,450Z"/>
-<path fill="#fff" d="m900,150v300h-900Z"/>
-<path fill="#003f87" d="m0,0h300l-300,450Z"/>
-<path fill="#007a3d" d="m900,300v150h-900Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-sc" viewBox="0 0 640 480">
+  <path fill="#fff" d="M0 0h640v480H0Z"/>
+  <path fill="#d92223" d="M0 480V0h640v160z"/>
+  <path fill="#fcd955" d="M0 480V0h426.7z"/>
+  <path fill="#003d88" d="M0 480V0h213.3z"/>
+  <path fill="#007a39" d="m0 480 640-160v160z"/>
 </svg>
