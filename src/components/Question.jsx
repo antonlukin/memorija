@@ -3,7 +3,7 @@ import styles from './Question.module.scss'
 
 import dictionary from '../dictionary.json'
 
-function Question({rules, setRules}) {
+function Question({ mode, setMode }) {
   const [current, setCurrent] = useState(null);
   const [repeats, setRepeats] = useState([]);
   const [answer, setAnswer] = useState(false);
@@ -25,28 +25,40 @@ function Question({rules, setRules}) {
     setRepeats([...repeats, current.code])
   }
 
+  const classes = [styles.question]
+
+  if (!answer) {
+    classes.push(styles.hidden)
+  }
+
   return (
     <>
       {current &&
-        <div className={styles.question}>
-          {rules === 'flag' &&
-            <div className={styles.group}>
+        <div className={classes.join(' ')}>
+          {mode === 'flag' &&
+            <>
               <figure className={styles.picture}>
                 <img src={`./flags/${current.code}.svg`} alt={current.country} />
               </figure>
 
               {answer &&
-                <div className={styles.results}>
+                <>
                   <p className={styles.title}>{current.country}</p>
                   <p className={styles.subtitle}>{current.capital}</p>
-                </div>
+                </>
               }
-            </div>
+
+              {!answer &&
+                <>
+                  <p className={styles.help}>Try to guess the country and its capital before viewing the result</p>
+                </>
+              }
+            </>
           }
 
           {answer
             ? <button className={styles.button} onClick={nextQuestion}>Next question</button>
-            : <button className={styles.button} onClick={showAnswer}>Check result</button>
+            : <button className={styles.button + ' ' + styles.result} onClick={showAnswer}>Check result</button>
           }
         </div>
       }

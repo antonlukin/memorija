@@ -1,18 +1,18 @@
-<svg width="1000" xmlns="http://www.w3.org/2000/svg" height="500" viewBox="0 0 72 36" xmlns:xlink="http://www.w3.org/1999/xlink">
-<path fill="#0073cf" d="m0,0h72v36h-72z"/>
-<path fill="#fff" d="m0,12h72v12h-72z"/>
-<g fill="#0073cf" id="star" transform="matrix(2 0 0 2 36 18)">
-<g id="cone">
-<path id="triangle" d="m0,0 0,1 .5,0z" transform="matrix(.95106 .30902 -.30902 .95106 0 -1)"/>
-<use xlink:href="#triangle" transform="scale(-1 1)"/>
-</g>
-<use xlink:href="#cone" transform="rotate(72)"/>
-<use xlink:href="#cone" transform="matrix(.30902 -.95106 .95106 .30902 0 0)"/>
-<use xlink:href="#cone" transform="rotate(144)"/>
-<use xlink:href="#cone" transform="matrix(-.80902 -.58779 .58779 -.80902 0 0)"/>
-</g>
-<use xlink:href="#star" transform="translate(10 -3.2)"/>
-<use xlink:href="#star" transform="translate(10 2.8)"/>
-<use xlink:href="#star" transform="translate(-10 -3.2)"/>
-<use xlink:href="#star" transform="translate(-10 2.8)"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icons-hn" viewBox="0 0 640 480">
+  <path fill="#18c3df" d="M0 0h640v480H0z"/>
+  <path fill="#fff" d="M0 160h640v160H0z"/>
+  <g id="hn-c" fill="#18c3df" transform="translate(320 240)scale(26.66665)">
+    <g id="hn-b">
+      <path id="hn-a" d="m-.3 0 .5.1L0-1z"/>
+      <use xlink:href="#hn-a" width="100%" height="100%" transform="scale(-1 1)"/>
+    </g>
+    <use xlink:href="#hn-b" width="100%" height="100%" transform="rotate(72)"/>
+    <use xlink:href="#hn-b" width="100%" height="100%" transform="rotate(-72)"/>
+    <use xlink:href="#hn-b" width="100%" height="100%" transform="rotate(144)"/>
+    <use xlink:href="#hn-b" width="100%" height="100%" transform="rotate(-144)"/>
+  </g>
+  <use xlink:href="#hn-c" width="100%" height="100%" transform="translate(133.3 -42.7)"/>
+  <use xlink:href="#hn-c" width="100%" height="100%" transform="translate(133.3 37.3)"/>
+  <use xlink:href="#hn-c" width="100%" height="100%" transform="translate(-133.3 -42.7)"/>
+  <use xlink:href="#hn-c" width="100%" height="100%" transform="translate(-133.3 37.3)"/>
 </svg>

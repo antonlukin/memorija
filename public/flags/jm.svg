@@ -1,11 +1,8 @@
-<!DOCTYPE svg>
-<svg width="600" xmlns="http://www.w3.org/2000/svg" height="300" viewBox="0 0 12 6">
-<defs>
-<clipPath id="r">
-<path d="m0,0h12v6h-12z"/>
-</clipPath>
-</defs>
-<path fill="#308a2a" d="m0,0h12v6h-12z"/>
-<path d="m0,0l12,6v-6l-12,6"/>
-<path stroke="#f9da00" d="m0,0l12,6m0-6l-12,6" clip-path="url(#r)"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-jm" viewBox="0 0 640 480">
+  <g fill-rule="evenodd">
+    <path fill="#000001" d="m0 0 320 240L0 480zm640 0L320 240l320 240z"/>
+    <path fill="#090" d="m0 0 320 240L640 0zm0 480 320-240 320 240z"/>
+    <path fill="#fc0" d="M640 0h-59.6L0 435.3V480h59.6L640 44.7z"/>
+    <path fill="#fc0" d="M0 0v44.7L580.4 480H640v-44.7L59.6 0z"/>
+  </g>
 </svg>

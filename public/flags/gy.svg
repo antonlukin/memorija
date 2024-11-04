@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" xmlns:xlink="http://www.w3.org/1999/xlink">
-<path fill="#009e49" d="m125,377.362h500v300h-500z" transform="translate(-125 -377.3622)"/>
-<g fill-rule="evenodd">
-<path fill="#fff" d="m125,377.3622l500,150-500,150v-300z" transform="translate(-125 -377.3622)"/>
-<path fill="#fcd116" d="m125,390.4122l456.5,136.95-456.5,136.95v-273.9z" transform="translate(-125 -377.3622)"/>
-<path d="m125,377.3622l250,150-250,150v-300z" transform="translate(-125 -377.3622)"/>
-<path fill="#ce1126" d="m125,394.8559l220.85,132.5062-220.85,132.5063v-265.0125z" transform="translate(-125 -377.3622)"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-gy" viewBox="0 0 640 480">
+  <g fill-rule="evenodd">
+    <path fill="#399408" d="M2.4 0H640v480H2.4z"/>
+    <path fill="#fff" d="M.2 0c-.9 0 619.6 241.5 619.6 241.5L0 479.8z"/>
+    <path fill="#ffde08" d="M.3 20.2c3.4 0 559 217.9 555.9 220L1.9 463.2.3 20.3z"/>
+    <path fill="#000001" d="M1.9.8c1.8 0 290.9 240.9 290.9 240.9L1.8 477z"/>
+    <path fill="#de2110" d="M.3 33.9c1.6-15 260.9 208.4 260.9 208.4L.2 451.7V33.9z"/>
+  </g>
 </svg>

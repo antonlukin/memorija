@@ -1,23 +1,29 @@
 .welcome {
   display: block;
   position: relative;
-}
 
-.options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  color: var(--color-title);
+  text-align: center;
 }
 
 .title {
   display: block;
   width: 100%;
   margin: 0 0 2rem;
-  text-align: center;
+
+  font-weight: 500;
   font-size: 1.5rem;
   user-select: none;
+  text-transform: uppercase;
+  letter-spacing: 0.075rem;
 
   color: var(--color-title);
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
 .button {
@@ -36,14 +42,14 @@
   font-size: 1.125rem;
 
   color: var(--color-text);
-  background-color: var(--color-primary);
-  border: none;
+  background-color: var(--color-buttons);
+  border: solid 0.0625rem var(--color-dark);
   border-radius: 0.5rem;
 
   transition: background-color 0.25s ease-in-out;
 
   &:hover {
-    background-color: var(--color-secondary);
+    background-color: var(--color-hover);
   }
 
   svg {

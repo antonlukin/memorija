@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" xmlns:xlink="http://www.w3.org/1999/xlink">
-<path fill="#fff" d="m0,0h900v600h-900z"/>
-<path fill="#ce1126" d="m0,0h900v200h-900z"/>
-<path fill="#009e60" id="s" d="m630,235l14.593,44.919 47.226-.005-38.206,27.758 14.593,44.914-38.206-27.758-38.206,27.758 14.594-44.914-38.207-27.758h47.226z"/>
-<use xlink:href="#s" transform="translate(-360)"/>
-<path d="m0,400h900v200h-900z"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-sy" viewBox="0 0 640 480">
+  <path fill="#000001" d="M0 0h640v480H0Z"/>
+  <path fill="#fff" d="M0 0h640v320H0Z"/>
+  <path fill="#ce1126" d="M0 0h640v160H0Z"/>
+  <path fill="#007a3d" d="m161 300 39-120 39 120-102-74.2h126M401 300l39-120 39 120-102-74.2h126"/>
 </svg>

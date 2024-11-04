@@ -1,18 +1,14 @@
-:root {
-  --color-primary: #FFAA5A;
-  --color-secondary: #FF785A;
-  --color-title: #DDDDDD;
-  --color-text: #191919;
-  --color-background: #191919;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600');
 
-// :root {
-//   --color-primary: #255C99;
-//   --color-secondary: #B3001B;
-//   --color-title: #DDDDDD;
-//   --color-text: #DDDDDD;
-//   --color-background: #262626;
-// }
+:root {
+  --color-buttons: #222;
+  --color-hover: #2f2f2f;
+  --color-title: #b8e653;
+  --color-text: #ccc;
+  --color-help: #999;
+  --color-background: #191919;
+  --color-dark: #000;
+}
 
 * {
   box-sizing: border-box;
@@ -26,7 +22,7 @@ body {
   margin: 0;
   padding: 0;
 
-  font: 500 16px/1.5 'Rubik', sans-serif;
+  font: 600 16px/1.5 'Montserrat', sans-serif;
 
   color: var(--color-text);
   background-color: var(--color-background);
@@ -44,4 +40,17 @@ body {
 
   padding: 2rem 1rem 4rem;
   font-size: 1.125rem;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  height: 100%;
+  width: 22.75rem;
+  max-width: 100%;
+  margin: 0 auto;
 }

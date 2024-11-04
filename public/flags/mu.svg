@@ -1,6 +1,8 @@
-<svg width="900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 4" height="600">
-<path fill="#dc181e" d="m0,0h6v1h-6z"/>
-<path fill="#012a87" d="m0,1h6v1h-6z"/>
-<path fill="#fceb0f" d="m0,2h6v1h-6z"/>
-<path fill="#169253" d="m0,3h6v1h-6z"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-mu" viewBox="0 0 640 480">
+  <g fill-rule="evenodd">
+    <path fill="#00a04d" d="M0 360h640v120H0z"/>
+    <path fill="#151f6d" d="M0 120h640v120H0z"/>
+    <path fill="#ee2737" d="M0 0h640v120H0z"/>
+    <path fill="#ffcd00" d="M0 240h640v120H0z"/>
+  </g>
 </svg>
