@@ -4,6 +4,7 @@
   --color-buttons: #222;
   --color-hover: #2f2f2f;
   --color-title: #b8e653;
+  --color-warning: #d65e5e;
   --color-text: #ccc;
   --color-help: #999;
   --color-background: #191919;
@@ -14,11 +15,12 @@
   box-sizing: border-box;
 }
 
-body, html {
-  height: 100%;
-}
-
 body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
   margin: 0;
   padding: 0;
 
@@ -26,31 +28,27 @@ body {
 
   color: var(--color-text);
   background-color: var(--color-background);
+
+  overscroll-behavior: none;
 }
 
 #root {
   display: flex;
-  height: 100%;
   align-items: center;
   justify-content: center;
-
-  width: 100%;
-  min-height: 32rem;
-  margin: 0 auto;
-
-  padding: 2rem 1rem 4rem;
-  font-size: 1.125rem;
-}
-
-main {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
   position: relative;
 
-  height: 100%;
-  width: 22.75rem;
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
+  max-width: 22.5rem;
+
+  font-size: 1.125rem;
+
+  overscroll-behavior: contain;
+
+  @supports (-webkit-touch-callout: none) {
+    body {
+      min-height: -webkit-fill-available;
+    }
+  }
 }

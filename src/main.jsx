@@ -9,12 +9,12 @@ const Game = () => {
   const [mode, setMode] = useState(null)
 
   return (
-    <main>
+    <>
       { mode
         ? <Question mode={mode} setMode={setMode} />
         : <Welcome setMode={setMode} />
       }
-    </main>
+    </>
   )
 }
 

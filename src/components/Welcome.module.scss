@@ -1,6 +1,9 @@
 .welcome {
-  display: block;
+  display: flex;
+  flex-flow: column nowrap;
   position: relative;
+  width: 100%;
+  padding: 2rem 1rem;
 
   color: var(--color-title);
   text-align: center;
@@ -22,20 +25,21 @@
 
 .options {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
+  width: 100%;
 }
 
 .button {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1rem;
   cursor: pointer;
 
-  width: 10rem;
-  height: 10rem;
+  width: 100%;
+  height: auto;
   padding: 1rem;
 
   font-family: inherit;
@@ -53,8 +57,9 @@
   }
 
   svg {
-    display: block;
-    width: 40%;
+    display:  none;
+    position: relative;
+    width: 1.75rem;
     height: auto;
   }
 }

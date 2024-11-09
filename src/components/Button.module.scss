@@ -1,0 +1,27 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  width: 100%;
+  padding: 1rem;
+
+  font-family: inherit;
+  font-size: 1.125rem;
+
+  color: var(--color-text);
+  background-color: var(--color-buttons);
+  border: solid 0.0625rem var(--color-dark);
+  border-radius: 0.5rem;
+}
+
+.primary {
+  color: var(--color-dark);
+  background-color: var(--color-title);
+}
+
+.warning {
+  color: var(--color-dark);
+  background-color: var(--color-warning);
+}

@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import styles from './Question.module.scss'
 
-import dictionary from '../dictionary.json'
+import Button from './Button'
+
+import dictionary from '../dictionary'
 
 function Question({ mode, setMode }) {
   const [current, setCurrent] = useState(null);
@@ -9,7 +11,7 @@ function Question({ mode, setMode }) {
   const [answer, setAnswer] = useState(false);
 
   useEffect(() => {
-    const search = dictionary.filter((result) => !repeats.includes(result.code))
+    const search = dictionary.filter((result) => !repeats.includes(result.iso2))
     const result = search[Math.floor(Math.random() * search.length)]
 
     console.log(repeats)
@@ -22,7 +24,7 @@ function Question({ mode, setMode }) {
 
   const nextQuestion = () => {
     setAnswer(false)
-    setRepeats([...repeats, current.code])
+    setRepeats([...repeats, current.iso2])
   }
 
   const classes = [styles.question]
@@ -38,7 +40,7 @@ function Question({ mode, setMode }) {
           {mode === 'flag' &&
             <>
               <figure className={styles.picture}>
-                <img src={`./flags/${current.code}.svg`} alt={current.country} />
+                <img src={`./flags/${current.iso2.toLowerCase()}.svg`} alt={current.country} />
               </figure>
 
               {answer &&
@@ -56,10 +58,20 @@ function Question({ mode, setMode }) {
             </>
           }
 
-          {answer
-            ? <button className={styles.button} onClick={nextQuestion}>Next question</button>
-            : <button className={styles.button + ' ' + styles.result} onClick={showAnswer}>Check result</button>
-          }
+          <div className={styles.manage}>
+            {answer &&
+              <>
+                <Button onClick={nextQuestion}>Next question</Button>
+                <Button isWarning={true} onClick={nextQuestion}>I was wrong</Button>
+              </>
+            }
+
+            {!answer &&
+              <>
+                <Button isPrimary={true} onClick={showAnswer}>Show answer</Button>
+              </>
+            }
+          </div>
         </div>
       }
     </>
