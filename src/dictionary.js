@@ -1584,17 +1584,6 @@ export default [
     internet: 'NL'
   },
   {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Netherlands Antilles',
-    capital: 'Willemstad',
-    fips: 'NT',
-    iso2: 'AN',
-    iso3: 'ANT',
-    isoNo: '530',
-    internet: 'AN'
-  },
-  {
     continent: 'Oceania',
     region: 'Pacific',
     country: 'New Caledonia',
@@ -2541,28 +2530,6 @@ export default [
     internet: 'MO'
   },
   {
-    continent: 'Antarctica',
-    region: 'Antarctica',
-    country: 'Antarctica',
-    capital: '',
-    fips: 'AY',
-    iso2: 'AQ',
-    iso3: 'ATA',
-    isoNo: '010',
-    internet: 'AQ'
-  },
-  {
-    continent: 'Atlantic Ocean',
-    region: 'South Atlantic Ocean',
-    country: 'Bouvet Island',
-    capital: '',
-    fips: 'BV',
-    iso2: 'BV',
-    iso3: 'BVT',
-    isoNo: '074',
-    internet: 'BV'
-  },
-  {
     continent: 'Asia',
     region: 'South Asia',
     country: 'British Indian Ocean Territory',
@@ -2572,50 +2539,6 @@ export default [
     iso3: 'IOT',
     isoNo: '086',
     internet: 'IO'
-  },
-  {
-    continent: 'Indian Ocean',
-    region: 'Southern Indian Ocean',
-    country: 'French Southern and Antarctic Lands',
-    capital: '',
-    fips: 'FS',
-    iso2: 'TF',
-    iso3: 'ATF',
-    isoNo: '260',
-    internet: '--'
-  },
-  {
-    continent: 'Indian Ocean',
-    region: 'Southern Indian Ocean',
-    country: 'Heard Island and McDonald Islands',
-    capital: '',
-    fips: 'HM',
-    iso2: 'HM',
-    iso3: 'HMD',
-    isoNo: '334',
-    internet: 'HM'
-  },
-  {
-    continent: 'Atlantic Ocean',
-    region: 'South Atlantic Ocean',
-    country: 'Saint Helena',
-    capital: '',
-    fips: 'SH',
-    iso2: 'SH',
-    iso3: 'SHN',
-    isoNo: '654',
-    internet: 'SH'
-  },
-  {
-    continent: 'Atlantic Ocean',
-    region: 'South Atlantic Ocean',
-    country: 'South Georgia and the South Sandwich Islands',
-    capital: '',
-    fips: 'SX',
-    iso2: 'GS',
-    iso3: 'SGS',
-    isoNo: '239',
-    internet: 'GS'
   },
   {
     continent: 'Europe',

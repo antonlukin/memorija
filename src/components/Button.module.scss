@@ -8,20 +8,43 @@
   padding: 1rem;
 
   font-family: inherit;
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
 
   color: var(--color-text);
   background-color: var(--color-buttons);
-  border: solid 0.0625rem var(--color-dark);
-  border-radius: 0.5rem;
+  border: solid 0.0625rem var(--color-border);
+  border-radius: 0.625rem;
+
+  transition: background-color 0.18s ease-in-out, transform 0.1s ease-in-out;
+
+  &:hover {
+    background-color: var(--color-hover);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 .primary {
   color: var(--color-dark);
   background-color: var(--color-title);
+  border-color: var(--color-title);
+
+  &:hover {
+    background-color: var(--color-title);
+    filter: brightness(1.05);
+  }
 }
 
 .warning {
   color: var(--color-dark);
   background-color: var(--color-warning);
+  border-color: var(--color-warning);
+
+  &:hover {
+    background-color: var(--color-warning);
+    filter: brightness(1.05);
+  }
 }
