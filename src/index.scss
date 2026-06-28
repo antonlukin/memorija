@@ -18,16 +18,23 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
+// Lock the document so the page itself never scrolls or rubber-bands (PWA feel).
+// Scrolling happens only inside dedicated containers, which contain their overscroll.
 body {
   display: flex;
+  position: fixed;
+  inset: 0;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
 
   font: 600 16px/1.5 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -43,11 +50,11 @@ body {
   position: relative;
 
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100%;
   max-width: 28rem;
 
   font-size: 1.125rem;
 
+  overflow: hidden;
   overscroll-behavior: contain;
 }

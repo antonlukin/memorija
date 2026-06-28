@@ -4,11 +4,18 @@
   position: relative;
 
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100%;
   padding: 1rem 1rem 1.5rem;
 
   color: var(--color-text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .center {
