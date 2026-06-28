@@ -24,6 +24,8 @@ body {
   justify-content: center;
 
   width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   padding: 0;
 
@@ -42,15 +44,10 @@ body {
 
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   max-width: 28rem;
 
   font-size: 1.125rem;
 
   overscroll-behavior: contain;
-
-  @supports (-webkit-touch-callout: none) {
-    body {
-      min-height: -webkit-fill-available;
-    }
-  }
 }
