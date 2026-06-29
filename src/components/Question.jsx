@@ -25,7 +25,7 @@ const TITLES = {
 }
 
 function Flag({ iso2, country }) {
-  return <img src={`./flags/${iso2.toLowerCase()}.svg`} alt={country} />
+  return <img src={`./flags/${iso2.toLowerCase()}.svg`} alt={country} width="640" height="480" />
 }
 
 function Question({ mode, setMode }) {
@@ -52,6 +52,22 @@ function Question({ mode, setMode }) {
     const timer = setTimeout(() => setQueue((prev) => prev.slice(1)), 2200)
     return () => clearTimeout(timer)
   }, [queue])
+
+  // Warm the browser cache with this round's flags so they appear instantly.
+  useEffect(() => {
+    const isos = new Set()
+    for (const item of session) {
+      if (mode === 'reverse') {
+        item.options.forEach((option) => isos.add(option.iso2))
+      } else if (mode !== 'capital') {
+        isos.add(item.current.iso2)
+      }
+    }
+    isos.forEach((iso) => {
+      const img = new Image()
+      img.src = `./flags/${iso.toLowerCase()}.svg`
+    })
+  }, [session, mode])
 
   const total = session.length
   const finished = index >= total

@@ -10,17 +10,18 @@ export const CONTINENTS = [
   { key: 'Europe', label: 'Europe' },
   { key: 'Asia', label: 'Asia' },
   { key: 'Africa', label: 'Africa' },
-  { key: 'Americas', label: 'Americas' },
+  { key: 'NorthAmerica', label: 'North & Central' },
+  { key: 'SouthAmerica', label: 'South America' },
   { key: 'Oceania', label: 'Oceania' },
 ]
 
-function groupOf(continent) {
-  return continent
-}
-
-// Region (continent group) a country belongs to — used to filter quiz questions.
-export function regionOf(continent) {
-  return groupOf(continent)
+// Region a country belongs to — used to filter quiz questions. The Americas are
+// split into South vs North & Central (incl. the Caribbean).
+export function regionOf(country) {
+  if (country.continent === 'Americas') {
+    return country.region === 'South America' ? 'SouthAmerica' : 'NorthAmerica'
+  }
+  return country.continent
 }
 
 const SETTINGS_KEY = 'memorija.settings.v1'
@@ -164,7 +165,7 @@ function summarize(data) {
 
   let mastered = 0
   for (const country of dictionary) {
-    const group = groups[groupOf(country.continent)]
+    const group = groups[regionOf(country)]
     group.total += 1
 
     if (isMastered(data.countries[country.iso2])) {

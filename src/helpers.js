@@ -29,7 +29,7 @@ function filterByRegions(dictionary, regions) {
     return dictionary
   }
   const set = new Set(regions)
-  const filtered = dictionary.filter((item) => set.has(regionOf(item.continent)))
+  const filtered = dictionary.filter((item) => set.has(regionOf(item)))
   return filtered.length ? filtered : dictionary
 }
 
