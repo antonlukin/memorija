@@ -32,7 +32,12 @@ body {
   justify-content: center;
 
   margin: 0;
-  padding: 0;
+  // Safe area for Telegram Mini Apps in fullscreen (status bar + Telegram UI).
+  // The --tg-* variables only exist inside Telegram, so this is 0 everywhere else.
+  padding-top: calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--tg-safe-area-inset-bottom, 0px) + var(--tg-content-safe-area-inset-bottom, 0px));
+  padding-left: calc(var(--tg-safe-area-inset-left, 0px) + var(--tg-content-safe-area-inset-left, 0px));
+  padding-right: calc(var(--tg-safe-area-inset-right, 0px) + var(--tg-content-safe-area-inset-right, 0px));
   overflow: hidden;
   overscroll-behavior: none;
 
