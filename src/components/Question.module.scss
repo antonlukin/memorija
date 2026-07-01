@@ -378,6 +378,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-flow: column nowrap;
+  justify-content: safe center;
   gap: 1.5rem;
 
   min-height: 0;
@@ -398,8 +399,6 @@
   flex-flow: column nowrap;
   align-items: center;
   gap: 0.25rem;
-
-  margin-top: auto;
 }
 
 .resultScore {
@@ -466,7 +465,6 @@
   gap: 0.625rem;
 
   width: 100%;
-  margin-bottom: auto;
 }
 
 .reviewHead {

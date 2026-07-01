@@ -33,17 +33,6 @@ export default [
     internet: 'DZ'
   },
   {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'American Samoa',
-    capital: 'Pago Pago',
-    fips: 'AQ',
-    iso2: 'AS',
-    iso3: 'ASM',
-    isoNo: '016',
-    internet: 'AS'
-  },
-  {
     continent: 'Europe',
     region: 'South West Europe',
     country: 'Andorra',
@@ -64,17 +53,6 @@ export default [
     iso3: 'AGO',
     isoNo: '024',
     internet: 'AO'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Anguilla',
-    capital: 'The Valley',
-    fips: 'AV',
-    iso2: 'AI',
-    iso3: 'AIA',
-    isoNo: '660',
-    internet: 'AI'
   },
   {
     continent: 'Americas',
@@ -108,17 +86,6 @@ export default [
     iso3: 'ARM',
     isoNo: '051',
     internet: 'AM'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Aruba',
-    capital: 'Oranjestad',
-    fips: 'AA',
-    iso2: 'AW',
-    iso3: 'ABW',
-    isoNo: '533',
-    internet: 'AW'
   },
   {
     continent: 'Oceania',
@@ -242,17 +209,6 @@ export default [
     internet: 'BJ'
   },
   {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Bermuda',
-    capital: 'Hamilton',
-    fips: 'BD',
-    iso2: 'BM',
-    iso3: 'BMU',
-    isoNo: '060',
-    internet: 'BM'
-  },
-  {
     continent: 'Asia',
     region: 'South Asia',
     country: 'Bhutan',
@@ -306,17 +262,6 @@ export default [
     iso3: 'BRA',
     isoNo: '076',
     internet: 'BR'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'British Virgin Islands',
-    capital: 'Road Town',
-    fips: 'VI',
-    iso2: 'VG',
-    iso3: 'VGB',
-    isoNo: '092',
-    internet: 'VG'
   },
   {
     continent: 'Asia',
@@ -407,17 +352,6 @@ export default [
     internet: 'CV'
   },
   {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Cayman Islands',
-    capital: 'George Town',
-    fips: 'CJ',
-    iso2: 'KY',
-    iso3: 'CYM',
-    isoNo: '136',
-    internet: 'KY'
-  },
-  {
     continent: 'Africa',
     region: 'Central Africa',
     country: 'Central African Republic',
@@ -462,28 +396,6 @@ export default [
     internet: 'CN'
   },
   {
-    continent: 'Asia',
-    region: 'South East Asia',
-    country: 'Christmas Island',
-    capital: 'The Settlement',
-    fips: 'KT',
-    iso2: 'CX',
-    iso3: 'CXR',
-    isoNo: '162',
-    internet: 'CX'
-  },
-  {
-    continent: 'Asia',
-    region: 'South East Asia',
-    country: 'Cocos (Keeling) Islands',
-    capital: 'West Island',
-    fips: 'CK',
-    iso2: 'CC',
-    iso3: 'CCK',
-    isoNo: '166',
-    internet: 'CC'
-  },
-  {
     continent: 'Americas',
     region: 'South America',
     country: 'Colombia',
@@ -515,17 +427,6 @@ export default [
     iso3: 'COG',
     isoNo: '178',
     internet: 'CG'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'Cook Islands',
-    capital: 'Avarua',
-    fips: 'CW',
-    iso2: 'CK',
-    iso3: 'COK',
-    isoNo: '184',
-    internet: 'CK'
   },
   {
     continent: 'Americas',
@@ -715,28 +616,6 @@ export default [
     internet: 'ET'
   },
   {
-    continent: 'Americas',
-    region: 'South America',
-    country: 'Falkland Islands (Islas Malvinas)',
-    capital: 'Stanley',
-    fips: 'FA',
-    iso2: 'FK',
-    iso3: 'FLK',
-    isoNo: '238',
-    internet: 'FK'
-  },
-  {
-    continent: 'Europe',
-    region: 'Northern Europe',
-    country: 'Faroe Islands',
-    capital: 'Torshavn',
-    fips: 'FO',
-    iso2: 'FO',
-    iso3: 'FRO',
-    isoNo: '234',
-    internet: 'FO'
-  },
-  {
     continent: 'Oceania',
     region: 'Pacific',
     country: 'Fiji',
@@ -768,28 +647,6 @@ export default [
     iso3: 'FRA',
     isoNo: '250',
     internet: 'FR'
-  },
-  {
-    continent: 'Americas',
-    region: 'South America',
-    country: 'French Guiana',
-    capital: 'Cayenne',
-    fips: 'FG',
-    iso2: 'GF',
-    iso3: 'GUF',
-    isoNo: '254',
-    internet: 'GF'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'French Polynesia',
-    capital: 'Papeete',
-    fips: 'FP',
-    iso2: 'PF',
-    iso3: 'PYF',
-    isoNo: '258',
-    internet: 'PF'
   },
   {
     continent: 'Africa',
@@ -848,17 +705,6 @@ export default [
   },
   {
     continent: 'Europe',
-    region: 'South West Europe',
-    country: 'Gibraltar',
-    capital: 'Gibraltar',
-    fips: 'GI',
-    iso2: 'GI',
-    iso3: 'GIB',
-    isoNo: '292',
-    internet: 'GI'
-  },
-  {
-    continent: 'Europe',
     region: 'South East Europe',
     country: 'Greece',
     capital: 'Athens',
@@ -870,17 +716,6 @@ export default [
   },
   {
     continent: 'Americas',
-    region: 'North America',
-    country: 'Greenland',
-    capital: 'Nuuk (Godthab)',
-    fips: 'GL',
-    iso2: 'GL',
-    iso3: 'GRL',
-    isoNo: '304',
-    internet: 'GL'
-  },
-  {
-    continent: 'Americas',
     region: 'West Indies',
     country: 'Grenada',
     capital: "Saint George's",
@@ -889,28 +724,6 @@ export default [
     iso3: 'GRD',
     isoNo: '308',
     internet: 'GD'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Guadeloupe',
-    capital: 'Basse-Terre',
-    fips: 'GP',
-    iso2: 'GP',
-    iso3: 'GLP',
-    isoNo: '312',
-    internet: 'GP'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'Guam',
-    capital: 'Hagatna (Agana)',
-    fips: 'GQ',
-    iso2: 'GU',
-    iso3: 'GUM',
-    isoNo: '316',
-    internet: 'GU'
   },
   {
     continent: 'Americas',
@@ -1375,17 +1188,6 @@ export default [
     internet: 'MT'
   },
   {
-    continent: 'Europe',
-    region: 'Western Europe',
-    country: 'Isle of Man',
-    capital: 'Douglas',
-    fips: 'IM',
-    iso2: 'IM',
-    iso3: 'IMN',
-    isoNo: '833',
-    internet: 'IM'
-  },
-  {
     continent: 'Oceania',
     region: 'Pacific',
     country: 'Marshall Islands',
@@ -1395,17 +1197,6 @@ export default [
     iso3: 'MHL',
     isoNo: '584',
     internet: 'MH'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Martinique',
-    capital: 'Fort-de-France',
-    fips: 'MB',
-    iso2: 'MQ',
-    iso3: 'MTQ',
-    isoNo: '474',
-    internet: 'MQ'
   },
   {
     continent: 'Africa',
@@ -1428,17 +1219,6 @@ export default [
     iso3: 'MUS',
     isoNo: '480',
     internet: 'MU'
-  },
-  {
-    continent: 'Africa',
-    region: 'Indian Ocean',
-    country: 'Mayotte',
-    capital: 'Mamoutzou',
-    fips: 'MF',
-    iso2: 'YT',
-    iso3: 'MYT',
-    isoNo: '175',
-    internet: 'YT'
   },
   {
     continent: 'Americas',
@@ -1494,17 +1274,6 @@ export default [
     iso3: 'MNG',
     isoNo: '496',
     internet: 'MN'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Montserrat',
-    capital: 'Plymouth',
-    fips: 'MH',
-    iso2: 'MS',
-    iso3: 'MSR',
-    isoNo: '500',
-    internet: 'MS'
   },
   {
     continent: 'Africa',
@@ -1586,17 +1355,6 @@ export default [
   {
     continent: 'Oceania',
     region: 'Pacific',
-    country: 'New Caledonia',
-    capital: 'Noumea',
-    fips: 'NC',
-    iso2: 'NC',
-    iso3: 'NCL',
-    isoNo: '540',
-    internet: 'NC'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
     country: 'New Zealand',
     capital: 'Wellington',
     fips: 'NZ',
@@ -1637,39 +1395,6 @@ export default [
     iso3: 'NGA',
     isoNo: '566',
     internet: 'NG'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'Niue',
-    capital: 'Alofi',
-    fips: 'NE',
-    iso2: 'NU',
-    iso3: 'NIU',
-    isoNo: '570',
-    internet: 'NU'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'Norfolk Island',
-    capital: 'Kingston',
-    fips: 'NF',
-    iso2: 'NF',
-    iso3: 'NFK',
-    isoNo: '574',
-    internet: 'NF'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'Northern Mariana Islands',
-    capital: 'Saipan',
-    fips: 'CQ',
-    iso2: 'MP',
-    iso3: 'MNP',
-    isoNo: '580',
-    internet: 'MP'
   },
   {
     continent: 'Europe',
@@ -1782,17 +1507,6 @@ export default [
     internet: 'PH'
   },
   {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'Pitcairn Islands',
-    capital: 'Adamstown',
-    fips: 'PC',
-    iso2: 'PN',
-    iso3: 'PCN',
-    isoNo: '612',
-    internet: 'PN'
-  },
-  {
     continent: 'Europe',
     region: 'Eastern Europe',
     country: 'Poland',
@@ -1815,17 +1529,6 @@ export default [
     internet: 'PT'
   },
   {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Puerto Rico',
-    capital: 'San Juan',
-    fips: 'RQ',
-    iso2: 'PR',
-    iso3: 'PRI',
-    isoNo: '630',
-    internet: 'PR'
-  },
-  {
     continent: 'Asia',
     region: 'South West Asia',
     country: 'Qatar',
@@ -1835,17 +1538,6 @@ export default [
     iso3: 'QAT',
     isoNo: '634',
     internet: 'QA'
-  },
-  {
-    continent: 'Africa',
-    region: 'Indian Ocean',
-    country: 'Reunion',
-    capital: 'Saint-Denis',
-    fips: 'RE',
-    iso2: 'RE',
-    iso3: 'REU',
-    isoNo: '638',
-    internet: 'RE'
   },
   {
     continent: 'Europe',
@@ -1901,17 +1593,6 @@ export default [
     iso3: 'LCA',
     isoNo: '662',
     internet: 'LC'
-  },
-  {
-    continent: 'Americas',
-    region: 'North America',
-    country: 'Saint Pierre and Miquelon',
-    capital: 'Saint-Pierre',
-    fips: 'SB',
-    iso2: 'PM',
-    iso3: 'SPM',
-    isoNo: '666',
-    internet: 'PM'
   },
   {
     continent: 'Americas',
@@ -2101,17 +1782,6 @@ export default [
     internet: 'SR'
   },
   {
-    continent: 'Europe',
-    region: 'Northern Europe',
-    country: 'Svalbard',
-    capital: 'Longyearbyen',
-    fips: 'SV',
-    iso2: 'SJ',
-    iso3: 'SJM',
-    isoNo: '744',
-    internet: 'SJ'
-  },
-  {
     continent: 'Africa',
     region: 'Southern Africa',
     country: 'Eswatini',
@@ -2213,17 +1883,6 @@ export default [
   {
     continent: 'Oceania',
     region: 'Pacific',
-    country: 'Tokelau',
-    capital: 'none',
-    fips: 'TL',
-    iso2: 'TK',
-    iso3: 'TKL',
-    isoNo: '772',
-    internet: 'TK'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
     country: 'Tonga',
     capital: "Nuku'alofa",
     fips: 'TN',
@@ -2275,17 +1934,6 @@ export default [
     iso3: 'TKM',
     isoNo: '795',
     internet: 'TM'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Turks and Caicos Islands',
-    capital: 'Grand Turk',
-    fips: 'TK',
-    iso2: 'TC',
-    iso3: 'TCA',
-    isoNo: '796',
-    internet: 'TC'
   },
   {
     continent: 'Oceania',
@@ -2355,17 +2003,6 @@ export default [
   },
   {
     continent: 'Americas',
-    region: 'North America',
-    country: 'United States Minor Outlying Islands',
-    capital: 'Washington DC',
-    fips: '',
-    iso2: 'UM',
-    iso3: 'UMI',
-    isoNo: '581',
-    internet: 'US'
-  },
-  {
-    continent: 'Americas',
     region: 'South America',
     country: 'Uruguay',
     capital: 'Montevideo',
@@ -2418,28 +2055,6 @@ export default [
     iso3: 'VNM',
     isoNo: '704',
     internet: 'VN'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Virgin Islands',
-    capital: 'Charlotte Amalie',
-    fips: 'VQ',
-    iso2: 'VI',
-    iso3: 'VIR',
-    isoNo: '850',
-    internet: 'VI'
-  },
-  {
-    continent: 'Oceania',
-    region: 'Pacific',
-    country: 'Wallis and Futuna',
-    capital: 'Mata-Utu (on Ile Uvea)',
-    fips: 'WF',
-    iso2: 'WF',
-    iso3: 'WLF',
-    isoNo: '876',
-    internet: 'WF'
   },
   {
     continent: 'Africa',
@@ -2508,50 +2123,6 @@ export default [
     internet: 'ZW'
   },
   {
-    continent: 'Asia',
-    region: 'East Asia',
-    country: 'Hong Kong',
-    capital: 'Victoria',
-    fips: 'HK',
-    iso2: 'HK',
-    iso3: 'HKG',
-    isoNo: '344',
-    internet: 'HK'
-  },
-  {
-    continent: 'Asia',
-    region: 'East Asia',
-    country: 'Macau',
-    capital: 'Macau',
-    fips: 'MC',
-    iso2: 'MO',
-    iso3: 'MAC',
-    isoNo: '446',
-    internet: 'MO'
-  },
-  {
-    continent: 'Asia',
-    region: 'South Asia',
-    country: 'British Indian Ocean Territory',
-    capital: '',
-    fips: 'IO',
-    iso2: 'IO',
-    iso3: 'IOT',
-    isoNo: '086',
-    internet: 'IO'
-  },
-  {
-    continent: 'Europe',
-    region: 'Western Europe',
-    country: 'Guernsey',
-    capital: 'Saint Peter Port',
-    fips: 'GK',
-    iso2: 'GG',
-    iso3: 'GGY',
-    isoNo: '831',
-    internet: 'GG'
-  },
-  {
     continent: 'Europe',
     region: 'South East Europe',
     country: 'Serbia',
@@ -2563,17 +2134,6 @@ export default [
     internet: 'RS'
   },
   {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Saint Barthélemy',
-    capital: 'Gustavia',
-    fips: 'TB',
-    iso2: 'BL',
-    iso3: 'BLM',
-    isoNo: '652',
-    internet: 'BL'
-  },
-  {
     continent: 'Europe',
     region: 'South East Europe',
     country: 'Montenegro',
@@ -2583,50 +2143,6 @@ export default [
     iso3: 'MNE',
     isoNo: '499',
     internet: 'ME'
-  },
-  {
-    continent: 'Europe',
-    region: 'Western Europe',
-    country: 'Jersey',
-    capital: 'Saint Helier',
-    fips: 'JE',
-    iso2: 'JE',
-    iso3: 'JEY',
-    isoNo: '832',
-    internet: 'JE'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Curaçao',
-    capital: 'Willemstad',
-    fips: 'UC',
-    iso2: 'CW',
-    iso3: 'CUW',
-    isoNo: '531',
-    internet: 'CW'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Saint Martin',
-    capital: 'Marigot',
-    fips: 'RN',
-    iso2: 'MF',
-    iso3: 'MAF',
-    isoNo: '663',
-    internet: 'MF'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Sint Maarten',
-    capital: 'Philipsburg',
-    fips: 'NN',
-    iso2: 'SX',
-    iso3: 'SXM',
-    isoNo: '534',
-    internet: 'SX'
   },
   {
     continent: 'Asia',
@@ -2652,28 +2168,6 @@ export default [
   },
   {
     continent: 'Europe',
-    region: 'Northern Europe',
-    country: 'Åland Islands',
-    capital: 'Mariehamn',
-    fips: 'AX',
-    iso2: 'AX',
-    iso3: 'ALA',
-    isoNo: '248',
-    internet: 'AX'
-  },
-  {
-    continent: 'Americas',
-    region: 'West Indies',
-    country: 'Bonaire',
-    capital: 'Kralendijk',
-    fips: 'BQ',
-    iso2: 'BQ',
-    iso3: 'BES',
-    isoNo: '535',
-    internet: 'BQ'
-  },
-  {
-    continent: 'Europe',
     region: 'South East Europe',
     country: 'Republic of Kosovo',
     capital: 'Pristina',
@@ -2682,5 +2176,5 @@ export default [
     iso3: 'XKX',
     isoNo: null,
     internet: 'XK'
-  },
-];
+  }
+]
