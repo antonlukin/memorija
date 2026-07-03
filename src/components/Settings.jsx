@@ -19,6 +19,14 @@ function Settings({ onBack }) {
     setRoundState(setRound(ROUND_STOPS[index]))
   }
 
+  const openAuthor = (event) => {
+    const telegram = window.Telegram?.WebApp
+    if (telegram?.openLink) {
+      event.preventDefault()
+      telegram.openLink('https://lukin.me/')
+    }
+  }
+
   return (
     <div className={styles.screen}>
       <header className={styles.bar}>
@@ -75,6 +83,10 @@ function Settings({ onBack }) {
           </p>
           <p className={styles.about}>
             Your progress is saved on this device. No account, no internet required.
+          </p>
+          <p className={styles.credit}>
+            Made in 2026 by{' '}
+            <a className={styles.link} href="https://lukin.me/" target="_blank" rel="noopener noreferrer" onClick={openAuthor}>Anton Lukin</a>
           </p>
         </section>
       </div>
