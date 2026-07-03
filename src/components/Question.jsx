@@ -156,6 +156,8 @@ function Question({ mode, setMode }) {
   const answered = selected !== null
 
   const applyResult = (isCorrect) => {
+    window.Telegram?.WebApp?.HapticFeedback?.notificationOccurred(isCorrect ? 'success' : 'error')
+
     const nextStreak = isCorrect ? streak + 1 : 0
     setStreak(nextStreak)
     setBestStreak((value) => Math.max(value, nextStreak))

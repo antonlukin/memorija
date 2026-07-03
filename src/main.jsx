@@ -3,12 +3,19 @@ import './index.scss'
 
 import App from './App'
 
-// Telegram Mini App: signal readiness and use the full height. Telegram keeps
-// the --tg-safe-area-inset-* CSS variables updated on its own. No-op elsewhere.
+// Telegram Mini App integration (all guarded — no-op outside Telegram / on old clients).
 const telegram = window.Telegram?.WebApp
 if (telegram) {
   telegram.ready()
-  telegram.expand?.()
+  try {
+    telegram.expand?.()
+    telegram.disableVerticalSwipes?.()          // don't close the app while scrolling
+    telegram.setHeaderColor?.('#141416')        // match our dark background
+    telegram.setBackgroundColor?.('#141416')
+    telegram.setBottomBarColor?.('#141416')
+  } catch {
+    /* older Telegram client — ignore unsupported methods */
+  }
 }
 
 createRoot(document.getElementById('root')).render(
