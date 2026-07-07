@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import styles from './Question.module.scss'
 
 import Button from './Button'
@@ -26,6 +26,28 @@ const TITLES = {
 
 function Flag({ iso2, country }) {
   return <img src={`./flags/${iso2.toLowerCase()}.svg`} alt={country} width="640" height="480" />
+}
+
+// Keep answer labels on a single line by shrinking the font until they fit.
+function FitText({ text }) {
+  const ref = useRef(null)
+
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) {
+      return
+    }
+    let size = 1
+    el.style.fontSize = `${size}rem`
+    let guard = 0
+    while (el.scrollWidth > el.clientWidth && size > 0.8125 && guard < 12) {
+      size -= 0.03125
+      el.style.fontSize = `${size}rem`
+      guard += 1
+    }
+  }, [text])
+
+  return <span ref={ref} className={styles.label}>{text}</span>
 }
 
 function Question({ mode, setMode }) {
@@ -303,7 +325,7 @@ function Question({ mode, setMode }) {
               >
                 {flagOptions
                   ? <Flag iso2={option.iso2} country={option.country} />
-                  : <span className={styles.label}>{mode === 'capital' ? option.capital : option.country}</span>
+                  : <FitText text={mode === 'capital' ? option.capital : option.country} />
                 }
                 {renderMark(option)}
               </button>
