@@ -47,6 +47,12 @@ const MAX_SCALE = 1400
 // the mode instead of showing a blank tile.
 const MIN_LAND = 0.03
 
+// If the target's drawn shape is smaller than this (canvas px), it's a sub-pixel
+// microstate (Monaco, Vatican, San Marino…) — draw a marker dot on it instead so
+// there's always something visible to spot.
+const MARKER_MIN = 12
+const MARKER_R = 6
+
 // Baked colours (dark theme). Target pops in the lime accent; neighbours are a
 // muted land grey separated by faint borders; oceans stay transparent (the app
 // paints the surface colour behind the SVG).
@@ -137,17 +143,27 @@ function contextMap(target) {
   }
   parts.push(`<path d="${round(targetD)}" fill="${TARGET_FILL}" stroke="${TARGET_STROKE}" stroke-width="1"/>`)
 
+  // Sub-pixel microstates: drop a visible dot on the country's centre.
+  const [[bx0, by0], [bx1, by1]] = path.bounds(target.geometry)
+  const marked = Math.max(bx1 - bx0, by1 - by0) < MARKER_MIN
+  if (marked) {
+    const [mx, my] = projection(centre)
+    const r = (n) => Math.round(n * 10) / 10
+    parts.push(`<circle cx="${r(mx)}" cy="${r(my)}" r="${MARKER_R}" fill="${TARGET_FILL}" stroke="${TARGET_STROKE}" stroke-width="1"/>`)
+  }
+
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEIGHT}">` +
     parts.join('') +
     '</svg>\n'
-  return { svg, land: land / (WIDTH * HEIGHT) }
+  return { svg, land: land / (WIDTH * HEIGHT), marked }
 }
 
 rmSync(OUT_DIR, { recursive: true, force: true })
 mkdirSync(OUT_DIR, { recursive: true })
 
 const included = []
+const marked = []
 const sparse = []
 const skipped = []
 const seen = new Set()
@@ -167,6 +183,7 @@ for (const target of detailed) {
   }
   writeFileSync(resolve(OUT_DIR, `${iso2.toLowerCase()}.svg`), map.svg)
   included.push(iso2)
+  if (map.marked) marked.push(iso2)
 }
 
 included.sort()
@@ -183,6 +200,7 @@ const missing = dictionary
   .sort()
 
 console.log(`Wrote ${included.length} context maps to public/outlines/`)
+console.log(`Marker dot (too small to draw) — ${marked.length}: ${marked.join(' ') || '—'}`)
 console.log(`\nDictionary countries WITHOUT a map (${missing.length}): ${missing.join(' ') || '—'}`)
 if (sparse.length) {
   console.log(`\nDropped — too much open ocean to place (${sparse.length}): ${sparse.join(', ')}`)
