@@ -19,7 +19,7 @@ import {
 const TITLES = {
   flag: 'Guess the country',
   reverse: 'Guess the flag',
-  shape: 'Guess by shape',
+  shape: 'Guess by map',
   zen: 'Zen mode',
   capital: 'Guess the capital',
 }

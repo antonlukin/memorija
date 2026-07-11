@@ -1,18 +1,23 @@
-// One-off generator: turns Natural Earth country boundaries into normalized
-// single-color silhouette SVGs (one per country, like the flags in public/).
+// One-off generator: builds a small "context map" per country from Natural
+// Earth boundaries — the target country filled in the accent colour, its
+// neighbours muted around it, zoomed to a tunable window. Renders as a plain
+// <img> (like the flags), so the app just points at public/outlines/<iso2>.svg.
 //
-//   node scripts/generate-outlines.mjs
+//   node scripts/generate-outlines.mjs   (or: yarn outlines)
+//
+// The target is drawn from the detailed 50m data; the surrounding neighbours
+// come from the coarse 110m data (they're only muted background, and coarse
+// keeps the files small). The projection is rotated to centre on the target's
+// longitude, which keeps antimeridian countries (Russia, Fiji) from breaking.
 //
 // Output:
-//   public/outlines/<iso2>.svg   — centered outline, fit to a fixed viewBox
-//   src/outlines.js              — manifest of which countries have an outline
-//
-// Deps are devDependencies only; the app ships the static SVGs, no runtime cost.
+//   public/outlines/<iso2>.svg   — context map, target highlighted
+//   src/outlines.js              — manifest of countries that have a map
 
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
-import { geoMercator, geoPath, geoArea } from 'd3-geo'
+import { geoMercator, geoPath, geoArea, geoCentroid } from 'd3-geo'
 import { feature } from 'topojson-client'
 
 import dictionary from '../src/dictionary.js'
@@ -21,33 +26,42 @@ const HERE = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(HERE, '..')
 const OUT_DIR = resolve(ROOT, 'public/outlines')
 
-// Canvas the shape is fit into (centered, aspect preserved).
-const SIZE = 300
-const PAD = 20
+// Canvas the map is drawn into. 4:3 like the flags, so it fills the full column
+// width in the app without being too tall.
+const WIDTH = 400
+const HEIGHT = 300
 
-// Baked-in fill so the silhouette can render as a plain <img> (like the flags),
-// reusing the same preload cache. Matches --color-text from the dark theme.
-const FILL = '#e8e8ea'
+// Zoom knob: how much surrounding context to show. The target's main landmass is
+// fit into a centred square of side HEIGHT / (1 + 2*ZOOM); the leftover margin is
+// the neighbour ring. Smaller = tighter on the country, larger = more continent.
+const ZOOM = 0.7
 
-// Drop polygons smaller than this fraction of a country's largest polygon —
-// removes far-flung tiny territories (Dutch Caribbean, Hawaii…) that would
-// otherwise shrink the recognizable mainland to a speck, while keeping real
-// archipelagos (Indonesia, Japan) whose major islands are all sizeable.
-const MIN_PART_RATIO = 0.02
+// Cap on projection scale, so tiny countries (Luxembourg, Singapore) don't zoom
+// in so far that their neighbours fall out of frame — the whole point here is to
+// place the country by its surroundings. Lower = wider minimum view.
+const MAX_SCALE = 1400
 
-// Natural Earth tags a few countries with numeric id "-99"; match those by name.
-const NAME_OVERRIDES = {
-  'France': 'FR',
-  'Norway': 'NO',
-  'Kosovo': 'XK',
-  'Somaliland': null,
-  'N. Cyprus': null,
+// Minimum share of the canvas that must be land (target + neighbours). Scattered
+// ocean microstates (Marshall Islands, Maldives, Seychelles…) fall below this —
+// they're just empty sea, impossible to place by geography, so we drop them from
+// the mode instead of showing a blank tile.
+const MIN_LAND = 0.03
+
+// Baked colours (dark theme). Target pops in the lime accent; neighbours are a
+// muted land grey separated by faint borders; oceans stay transparent (the app
+// paints the surface colour behind the SVG).
+const TARGET_FILL = '#b8e653'
+const TARGET_STROKE = '#0c0e06'
+const CONTEXT_FILL = '#2c2c34'
+const CONTEXT_STROKE = '#474751'
+const STROKE_W = 0.8
+
+const load = (file) => {
+  const topo = JSON.parse(readFileSync(resolve(ROOT, 'node_modules/world-atlas', file), 'utf8'))
+  return feature(topo, topo.objects.countries).features
 }
-
-const topo = JSON.parse(
-  readFileSync(resolve(ROOT, 'node_modules/world-atlas/countries-50m.json'), 'utf8'),
-)
-const countries = feature(topo, topo.objects.countries).features
+const detailed = load('countries-50m.json')
+const coarse = load('countries-110m.json')
 
 // numeric ISO code (leading zeros stripped) -> iso2, plus a name fallback.
 const byNumeric = new Map()
@@ -55,6 +69,15 @@ const byName = new Map()
 for (const item of dictionary) {
   byNumeric.set(String(Number(item.isoNo)), item.iso2)
   byName.set(item.country, item.iso2)
+}
+
+// Natural Earth tags a few countries with numeric id "-99"; match those by name.
+const NAME_OVERRIDES = {
+  France: 'FR',
+  Norway: 'NO',
+  Kosovo: 'XK',
+  Somaliland: null,
+  'N. Cyprus': null,
 }
 
 function iso2For(f) {
@@ -73,68 +96,84 @@ const polygonsOf = (geometry) =>
 
 const areaOf = (coords) => geoArea({ type: 'Polygon', coordinates: coords })
 
-function toSvg(geometry) {
-  // Drop micro-islands (tiny specks that only add noise and file weight).
-  let polygons = polygonsOf(geometry)
-  const maxArea = Math.max(...polygons.map(areaOf))
-  polygons = polygons.filter((p) => areaOf(p) >= MIN_PART_RATIO * maxArea)
-  if (!polygons.length) return null
+const round = (d) => d.replace(/-?\d+\.\d+/g, (m) => String(Math.round(+m * 10) / 10))
 
-  // Fit the projection to the largest landmass (the recognizable mainland),
-  // then keep only the parts that actually land on the canvas. This turns
-  // "mainland + a distant overseas territory" (France + French Guiana, the
-  // Netherlands + its Caribbean, the US + Hawaii…) into just the mainland,
-  // instead of a speck lost inside an ocean-wide bounding box.
-  const largest = polygons.reduce((a, b) => (areaOf(a) >= areaOf(b) ? a : b))
-  const projection = geoMercator().fitExtent(
-    [[PAD, PAD], [SIZE - PAD, SIZE - PAD]],
-    { type: 'Polygon', coordinates: largest },
-  )
+function contextMap(target) {
+  // Focus the zoom on the target's largest landmass so a distant overseas
+  // territory doesn't pull the whole map out to an ocean.
+  const focus = polygonsOf(target.geometry).reduce((a, b) => (areaOf(a) >= areaOf(b) ? a : b))
+  const focusGeo = { type: 'Polygon', coordinates: focus }
+  const centre = geoCentroid(focusGeo)
+
+  const side = HEIGHT / (1 + 2 * ZOOM)
+  const offX = (WIDTH - side) / 2
+  const offY = (HEIGHT - side) / 2
+  const projection = geoMercator()
+    .rotate([-centre[0], 0])
+    .fitExtent([[offX, offY], [WIDTH - offX, HEIGHT - offY]], focusGeo)
+  // Don't over-zoom tiny countries: cap the scale and re-centre on the target.
+  if (projection.scale() > MAX_SCALE) {
+    projection.scale(MAX_SCALE)
+    const [cx, cy] = projection(centre)
+    const [tx, ty] = projection.translate()
+    projection.translate([tx + WIDTH / 2 - cx, ty + HEIGHT / 2 - cy])
+  }
+  projection.clipExtent([[0, 0], [WIDTH, HEIGHT]])
   const path = geoPath(projection)
-  const margin = SIZE * 0.15
-  polygons = polygons.filter((p) => {
-    const [[x0, y0], [x1, y1]] = path.bounds({ type: 'Polygon', coordinates: p })
-    return x1 >= -margin && x0 <= SIZE + margin && y1 >= -margin && y0 <= SIZE + margin
-  })
 
-  const raw = path({ type: 'MultiPolygon', coordinates: polygons })
-  if (!raw) return null
-  // Round coordinates to 0.1px — invisible at this scale, but shrinks files a lot.
-  const d = raw.replace(/-?\d+\.\d+/g, (m) => String(Math.round(+m * 10) / 10))
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SIZE} ${SIZE}"><path fill="${FILL}" d="${d}"/></svg>\n`
+  const targetD = path(target.geometry)
+  if (!targetD) return null
+
+  const targetIso = iso2For(target)
+  let land = Math.abs(path.area(target.geometry))
+  const parts = []
+  for (const other of coarse) {
+    if (iso2For(other) === targetIso) continue // don't draw a coarse copy under the target
+    const d = path(other.geometry)
+    if (d) {
+      parts.push(`<path d="${round(d)}" fill="${CONTEXT_FILL}" stroke="${CONTEXT_STROKE}" stroke-width="${STROKE_W}"/>`)
+      land += Math.abs(path.area(other.geometry))
+    }
+  }
+  parts.push(`<path d="${round(targetD)}" fill="${TARGET_FILL}" stroke="${TARGET_STROKE}" stroke-width="1"/>`)
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEIGHT}">` +
+    parts.join('') +
+    '</svg>\n'
+  return { svg, land: land / (WIDTH * HEIGHT) }
 }
 
 rmSync(OUT_DIR, { recursive: true, force: true })
 mkdirSync(OUT_DIR, { recursive: true })
 
 const included = []
-const skippedGeometry = []
-const unmatched = []
+const sparse = []
+const skipped = []
 const seen = new Set()
 
-for (const f of countries) {
-  const iso2 = iso2For(f)
-  if (iso2 === null) continue // explicitly ignored (disputed territories)
-  if (!iso2) {
-    unmatched.push(`${f.properties?.name} (id ${f.id})`)
+for (const target of detailed) {
+  const iso2 = iso2For(target)
+  if (!iso2 || seen.has(iso2)) continue
+  const map = contextMap(target)
+  if (!map) {
+    skipped.push(iso2)
     continue
   }
-  if (seen.has(iso2)) continue
-  const svg = toSvg(f.geometry)
-  if (!svg) {
-    skippedGeometry.push(iso2)
-    continue
-  }
-  writeFileSync(resolve(OUT_DIR, `${iso2.toLowerCase()}.svg`), svg)
-  included.push(iso2)
   seen.add(iso2)
+  if (map.land < MIN_LAND) {
+    sparse.push(`${iso2} ${(map.land * 100).toFixed(1)}%`)
+    continue // too much open ocean to place by geography
+  }
+  writeFileSync(resolve(OUT_DIR, `${iso2.toLowerCase()}.svg`), map.svg)
+  included.push(iso2)
 }
 
 included.sort()
 
 const manifest =
   '// Auto-generated by scripts/generate-outlines.mjs — do not edit by hand.\n' +
-  '// Countries that have a silhouette outline in public/outlines/.\n' +
+  '// Countries that have a context map in public/outlines/.\n' +
   `export const OUTLINES = new Set(${JSON.stringify(included)})\n`
 writeFileSync(resolve(ROOT, 'src/outlines.js'), manifest)
 
@@ -143,13 +182,11 @@ const missing = dictionary
   .filter((iso) => !seen.has(iso))
   .sort()
 
-console.log(`Wrote ${included.length} outlines to public/outlines/`)
-console.log(`\nDictionary countries WITHOUT an outline (${missing.length}):`)
-console.log('  ' + missing.join(' '))
-if (unmatched.length) {
-  console.log(`\nNatural Earth features not matched to a country (${unmatched.length}):`)
-  unmatched.forEach((u) => console.log('  ' + u))
+console.log(`Wrote ${included.length} context maps to public/outlines/`)
+console.log(`\nDictionary countries WITHOUT a map (${missing.length}): ${missing.join(' ') || '—'}`)
+if (sparse.length) {
+  console.log(`\nDropped — too much open ocean to place (${sparse.length}): ${sparse.join(', ')}`)
 }
-if (skippedGeometry.length) {
-  console.log(`\nSkipped (empty geometry): ${skippedGeometry.join(' ')}`)
+if (skipped.length) {
+  console.log(`Skipped (empty geometry): ${skipped.join(' ')}`)
 }

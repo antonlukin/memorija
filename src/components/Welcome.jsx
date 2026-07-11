@@ -18,8 +18,8 @@ const MODES = [
   },
   {
     key: 'shape',
-    label: 'Guess by shape',
-    hint: 'See an outline, pick the country',
+    label: 'Guess by map',
+    hint: 'Find the highlighted country',
     icon: <path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15" />,
   },
   {
