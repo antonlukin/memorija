@@ -30,6 +30,11 @@ export default defineConfig({
       workbox: {
         // Precache the app shell, every flag and the bundled fonts for full offline use.
         globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2}'],
+        // A new build takes over immediately and wipes the previous version's
+        // precache, so phones don't stay stuck on a stale cached copy.
+        skipWaiting: true,
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
       },
     }),
   ],
