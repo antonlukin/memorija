@@ -1,14 +1,20 @@
 import { MASTER_AT, regionOf, hasCapital } from './storage'
 import { similarCountries } from './similar'
+import { OUTLINES } from './outlines'
 
 // Questions per round. Small sections use their whole pool.
 export const ROUND_SIZE = 12
 
-// Modes that ask about a capital need entries that actually have one
+// Some modes can only ask about a subset: capital mode needs an entry with a
+// capital, shape mode needs one with a generated outline silhouette.
 export function getPool(mode, dictionary) {
-  return mode === 'capital'
-    ? dictionary.filter(hasCapital)
-    : dictionary
+  if (mode === 'capital') {
+    return dictionary.filter(hasCapital)
+  }
+  if (mode === 'shape') {
+    return dictionary.filter((item) => OUTLINES.has(item.iso2))
+  }
+  return dictionary
 }
 
 export function shuffle(arr) {
@@ -114,6 +120,12 @@ function buildOptions(mode, current, pool, dictionary) {
     const inPool = new Set(pool.map((item) => item.iso2))
     const lookalikes = similarCountries(current.iso2).filter((item) => inPool.has(item.iso2))
     take(shuffle(lookalikes), LOOKALIKE_MAX)
+  }
+
+  // Shape mode draws its distractors from the same continent, so the outline
+  // can't be placed by ruling the wrong regions out.
+  if (mode === 'shape') {
+    take(shuffle(pool.filter((item) => item.continent === current.continent)))
   }
 
   take(shuffle(pool))

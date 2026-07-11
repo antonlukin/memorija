@@ -1,0 +1,155 @@
+// One-off generator: turns Natural Earth country boundaries into normalized
+// single-color silhouette SVGs (one per country, like the flags in public/).
+//
+//   node scripts/generate-outlines.mjs
+//
+// Output:
+//   public/outlines/<iso2>.svg   — centered outline, fit to a fixed viewBox
+//   src/outlines.js              — manifest of which countries have an outline
+//
+// Deps are devDependencies only; the app ships the static SVGs, no runtime cost.
+
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
+import { geoMercator, geoPath, geoArea } from 'd3-geo'
+import { feature } from 'topojson-client'
+
+import dictionary from '../src/dictionary.js'
+
+const HERE = dirname(fileURLToPath(import.meta.url))
+const ROOT = resolve(HERE, '..')
+const OUT_DIR = resolve(ROOT, 'public/outlines')
+
+// Canvas the shape is fit into (centered, aspect preserved).
+const SIZE = 300
+const PAD = 20
+
+// Baked-in fill so the silhouette can render as a plain <img> (like the flags),
+// reusing the same preload cache. Matches --color-text from the dark theme.
+const FILL = '#e8e8ea'
+
+// Drop polygons smaller than this fraction of a country's largest polygon —
+// removes far-flung tiny territories (Dutch Caribbean, Hawaii…) that would
+// otherwise shrink the recognizable mainland to a speck, while keeping real
+// archipelagos (Indonesia, Japan) whose major islands are all sizeable.
+const MIN_PART_RATIO = 0.02
+
+// Natural Earth tags a few countries with numeric id "-99"; match those by name.
+const NAME_OVERRIDES = {
+  'France': 'FR',
+  'Norway': 'NO',
+  'Kosovo': 'XK',
+  'Somaliland': null,
+  'N. Cyprus': null,
+}
+
+const topo = JSON.parse(
+  readFileSync(resolve(ROOT, 'node_modules/world-atlas/countries-50m.json'), 'utf8'),
+)
+const countries = feature(topo, topo.objects.countries).features
+
+// numeric ISO code (leading zeros stripped) -> iso2, plus a name fallback.
+const byNumeric = new Map()
+const byName = new Map()
+for (const item of dictionary) {
+  byNumeric.set(String(Number(item.isoNo)), item.iso2)
+  byName.set(item.country, item.iso2)
+}
+
+function iso2For(f) {
+  if (f.id && f.id !== '-99') {
+    const hit = byNumeric.get(String(Number(f.id)))
+    if (hit) return hit
+  }
+  const name = f.properties?.name
+  if (name && name in NAME_OVERRIDES) return NAME_OVERRIDES[name]
+  if (name && byName.has(name)) return byName.get(name)
+  return undefined
+}
+
+const polygonsOf = (geometry) =>
+  geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates
+
+const areaOf = (coords) => geoArea({ type: 'Polygon', coordinates: coords })
+
+function toSvg(geometry) {
+  // Drop micro-islands (tiny specks that only add noise and file weight).
+  let polygons = polygonsOf(geometry)
+  const maxArea = Math.max(...polygons.map(areaOf))
+  polygons = polygons.filter((p) => areaOf(p) >= MIN_PART_RATIO * maxArea)
+  if (!polygons.length) return null
+
+  // Fit the projection to the largest landmass (the recognizable mainland),
+  // then keep only the parts that actually land on the canvas. This turns
+  // "mainland + a distant overseas territory" (France + French Guiana, the
+  // Netherlands + its Caribbean, the US + Hawaii…) into just the mainland,
+  // instead of a speck lost inside an ocean-wide bounding box.
+  const largest = polygons.reduce((a, b) => (areaOf(a) >= areaOf(b) ? a : b))
+  const projection = geoMercator().fitExtent(
+    [[PAD, PAD], [SIZE - PAD, SIZE - PAD]],
+    { type: 'Polygon', coordinates: largest },
+  )
+  const path = geoPath(projection)
+  const margin = SIZE * 0.15
+  polygons = polygons.filter((p) => {
+    const [[x0, y0], [x1, y1]] = path.bounds({ type: 'Polygon', coordinates: p })
+    return x1 >= -margin && x0 <= SIZE + margin && y1 >= -margin && y0 <= SIZE + margin
+  })
+
+  const raw = path({ type: 'MultiPolygon', coordinates: polygons })
+  if (!raw) return null
+  // Round coordinates to 0.1px — invisible at this scale, but shrinks files a lot.
+  const d = raw.replace(/-?\d+\.\d+/g, (m) => String(Math.round(+m * 10) / 10))
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SIZE} ${SIZE}"><path fill="${FILL}" d="${d}"/></svg>\n`
+}
+
+rmSync(OUT_DIR, { recursive: true, force: true })
+mkdirSync(OUT_DIR, { recursive: true })
+
+const included = []
+const skippedGeometry = []
+const unmatched = []
+const seen = new Set()
+
+for (const f of countries) {
+  const iso2 = iso2For(f)
+  if (iso2 === null) continue // explicitly ignored (disputed territories)
+  if (!iso2) {
+    unmatched.push(`${f.properties?.name} (id ${f.id})`)
+    continue
+  }
+  if (seen.has(iso2)) continue
+  const svg = toSvg(f.geometry)
+  if (!svg) {
+    skippedGeometry.push(iso2)
+    continue
+  }
+  writeFileSync(resolve(OUT_DIR, `${iso2.toLowerCase()}.svg`), svg)
+  included.push(iso2)
+  seen.add(iso2)
+}
+
+included.sort()
+
+const manifest =
+  '// Auto-generated by scripts/generate-outlines.mjs — do not edit by hand.\n' +
+  '// Countries that have a silhouette outline in public/outlines/.\n' +
+  `export const OUTLINES = new Set(${JSON.stringify(included)})\n`
+writeFileSync(resolve(ROOT, 'src/outlines.js'), manifest)
+
+const missing = dictionary
+  .map((d) => d.iso2)
+  .filter((iso) => !seen.has(iso))
+  .sort()
+
+console.log(`Wrote ${included.length} outlines to public/outlines/`)
+console.log(`\nDictionary countries WITHOUT an outline (${missing.length}):`)
+console.log('  ' + missing.join(' '))
+if (unmatched.length) {
+  console.log(`\nNatural Earth features not matched to a country (${unmatched.length}):`)
+  unmatched.forEach((u) => console.log('  ' + u))
+}
+if (skippedGeometry.length) {
+  console.log(`\nSkipped (empty geometry): ${skippedGeometry.join(' ')}`)
+}

@@ -17,6 +17,12 @@ const MODES = [
     icon: <path d="M16 3h5v5M4 20L20.2 3.8M21 16v5h-5M15 15l5.1 5.1M4 4l5 5" />,
   },
   {
+    key: 'shape',
+    label: 'Guess by shape',
+    hint: 'See an outline, pick the country',
+    icon: <path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15" />,
+  },
+  {
     key: 'zen',
     label: 'Zen mode',
     hint: 'Flip the card, check yourself',

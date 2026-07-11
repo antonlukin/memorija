@@ -19,12 +19,17 @@ import {
 const TITLES = {
   flag: 'Guess the country',
   reverse: 'Guess the flag',
+  shape: 'Guess by shape',
   zen: 'Zen mode',
   capital: 'Guess the capital',
 }
 
 function Flag({ iso2, country }) {
   return <img src={`./flags/${iso2.toLowerCase()}.svg`} alt={country} width="640" height="480" />
+}
+
+function Outline({ iso2, country }) {
+  return <img src={`./outlines/${iso2.toLowerCase()}.svg`} alt={country} width="300" height="300" />
 }
 
 // Keep answer labels on a single line by shrinking the font until they fit.
@@ -76,6 +81,7 @@ function Question({ mode, setMode }) {
 
   // Warm the browser cache with this round's flags so they appear instantly.
   useEffect(() => {
+    const base = mode === 'shape' ? './outlines' : './flags'
     const isos = new Set()
     for (const item of session) {
       if (mode === 'reverse') {
@@ -86,7 +92,7 @@ function Question({ mode, setMode }) {
     }
     isos.forEach((iso) => {
       const img = new Image()
-      img.src = `./flags/${iso.toLowerCase()}.svg`
+      img.src = `${base}/${iso.toLowerCase()}.svg`
     })
   }, [session, mode])
 
@@ -259,8 +265,10 @@ function Question({ mode, setMode }) {
     return null
   }
 
-  // Flag and zen show the flag; reverse shows the country name (pick the flag).
+  // Flag and zen show the flag, shape shows the outline; reverse and capital
+  // show the country name.
   const showFlag = mode === 'flag' || mode === 'zen'
+  const showShape = mode === 'shape'
   const flagOptions = mode === 'reverse'
   const toast = queue[0]
 
@@ -301,7 +309,13 @@ function Question({ mode, setMode }) {
             </figure>
           }
 
-          {!showFlag &&
+          {showShape &&
+            <figure className={styles.shape}>
+              <Outline iso2={current.iso2} country={current.country} />
+            </figure>
+          }
+
+          {!showFlag && !showShape &&
             <p className={styles.country}>{current.country}</p>
           }
         </div>
