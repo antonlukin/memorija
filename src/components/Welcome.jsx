@@ -17,12 +17,6 @@ const MODES = [
     icon: <path d="M16 3h5v5M4 20L20.2 3.8M21 16v5h-5M15 15l5.1 5.1M4 4l5 5" />,
   },
   {
-    key: 'tricky',
-    label: 'Tricky flags',
-    hint: 'Tell look-alike flags apart',
-    icon: <><rect x="8.5" y="8.5" width="11" height="11" rx="2" /><path d="M15.5 8.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.5a2 2 0 0 0 2 2h2.5" /></>,
-  },
-  {
     key: 'zen',
     label: 'Zen mode',
     hint: 'Flip the card, check yourself',

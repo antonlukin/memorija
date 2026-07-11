@@ -19,7 +19,6 @@ import {
 const TITLES = {
   flag: 'Guess the country',
   reverse: 'Guess the flag',
-  tricky: 'Tricky flags',
   zen: 'Zen mode',
   capital: 'Guess the capital',
 }
@@ -260,8 +259,8 @@ function Question({ mode, setMode }) {
     return null
   }
 
-  // Tricky shows one flag and offers look-alike country names as options.
-  const showFlag = mode === 'flag' || mode === 'zen' || mode === 'tricky'
+  // Flag and zen show the flag; reverse shows the country name (pick the flag).
+  const showFlag = mode === 'flag' || mode === 'zen'
   const flagOptions = mode === 'reverse'
   const toast = queue[0]
 

@@ -1,5 +1,5 @@
 import { MASTER_AT, regionOf, hasCapital } from './storage'
-import { LOOKALIKES, similarCountries } from './similar'
+import { similarCountries } from './similar'
 
 // Questions per round. Small sections use their whole pool.
 export const ROUND_SIZE = 12
@@ -31,16 +31,6 @@ function filterByRegions(dictionary, regions) {
   const set = new Set(regions)
   const filtered = dictionary.filter((item) => set.has(regionOf(item)))
   return filtered.length ? filtered : dictionary
-}
-
-// The pool of countries a round can draw from for the given mode. Tricky keeps
-// its distractors global (look-alikes cross continents), but the asked flag
-// still respects the selected regions.
-function sectionPool(mode, dictionary, regions) {
-  if (mode === 'tricky') {
-    return filterByRegions(LOOKALIKES, regions)
-  }
-  return getPool(mode, filterByRegions(dictionary, regions))
 }
 
 // Bias selection toward unseen and frequently-missed countries.
@@ -84,6 +74,11 @@ function weightedSample(pool, progress, count) {
   return picked
 }
 
+// How many of the 3 wrong options may be flag look-alikes. Capping below 3
+// keeps flag rounds a bit harder without turning every question into the old
+// tricky drill.
+const LOOKALIKE_MAX = 2
+
 // Build the 4 answer options for one question. In capital mode the visible
 // label is the capital, so distractors must have distinct capital names too —
 // otherwise two identical options could appear and one read as "wrong".
@@ -93,9 +88,9 @@ function buildOptions(mode, current, pool, dictionary) {
   const usedLabel = isCapital ? new Set([current.capital]) : null
   const distractors = []
 
-  const take = (candidates) => {
+  const take = (candidates, limit = 3) => {
     for (const country of candidates) {
-      if (distractors.length >= 3) {
+      if (distractors.length >= limit) {
         break
       }
       if (usedIso.has(country.iso2)) {
@@ -112,9 +107,18 @@ function buildOptions(mode, current, pool, dictionary) {
     }
   }
 
-  take(shuffle(mode === 'tricky' ? similarCountries(current.iso2) : pool))
+  // Flag modes bias a couple of wrong options toward look-alike flags, so
+  // confusable countries surface far more often than random chance would. Keep
+  // them inside the round's pool so a region filter isn't given away.
+  if (mode === 'flag' || mode === 'reverse') {
+    const inPool = new Set(pool.map((item) => item.iso2))
+    const lookalikes = similarCountries(current.iso2).filter((item) => inPool.has(item.iso2))
+    take(shuffle(lookalikes), LOOKALIKE_MAX)
+  }
 
-  // Top up from the full pool if a family (or unique-label set) was too small.
+  take(shuffle(pool))
+
+  // Top up from the full pool if the region slice (or unique-label set) was too small.
   if (distractors.length < 3) {
     take(shuffle(getPool(mode, dictionary)))
   }
@@ -125,7 +129,7 @@ function buildOptions(mode, current, pool, dictionary) {
 // Build a finite round: a sample of the section, each country once, ending
 // when every question has been answered. `size` of 0 means the whole section.
 export function buildSession(mode, dictionary, progress = {}, regions = null, size = ROUND_SIZE) {
-  const pool = sectionPool(mode, dictionary, regions)
+  const pool = getPool(mode, filterByRegions(dictionary, regions))
   const count = size > 0 ? Math.min(size, pool.length) : pool.length
   const order = weightedSample(pool, progress, count)
 

@@ -46,11 +46,8 @@ for (const group of GROUPS) {
   }
 }
 
-// Countries that have at least one look-alike — the pool for the tricky mode.
-export const LOOKALIKES = Object.keys(neighbours)
-  .filter((iso) => neighbours[iso].size > 0)
-  .map((iso) => byIso[iso])
-
+// Return the look-alike countries for a flag, used to bias wrong answers in the
+// flag-guessing modes toward visually confusable options.
 export function similarCountries(iso2) {
   const set = neighbours[iso2]
   if (!set) {
