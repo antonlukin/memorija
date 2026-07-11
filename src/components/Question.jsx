@@ -2,17 +2,20 @@ import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import styles from './Question.module.scss'
 
 import Button from './Button'
-import { IconArrowLeft, IconCheck, IconCross, IconGlobe, IconPin, IconTrophy } from './icons'
+import { IconArrowLeft, IconCheck, IconCross, IconGlobe, IconPin, IconTrophy, IconCompass } from './icons'
 
 import dictionary from '../dictionary'
 import { buildSession } from '../helpers'
 import {
   recordCountry,
   recordCapital,
+  recordGeo,
   getProgress,
   getCapitalProgress,
+  getGeoProgress,
   getSummary,
   getCapitalSummary,
+  getGeoSummary,
   getSettings,
 } from '../storage'
 
@@ -57,7 +60,8 @@ function FitText({ text }) {
 function Question({ mode, setMode }) {
   const newSession = () => {
     const settings = getSettings()
-    const progress = mode === 'capital' ? getCapitalProgress() : getProgress()
+    const progress =
+      mode === 'capital' ? getCapitalProgress() : mode === 'shape' ? getGeoProgress() : getProgress()
     return buildSession(mode, dictionary, progress, settings.regions, settings.round)
   }
 
@@ -211,6 +215,17 @@ function Question({ mode, setMode }) {
       return
     }
 
+    if (mode === 'shape') {
+      const { justMastered, newAchievements } = recordGeo(current.iso2, isCorrect, nextStreak)
+      const toasts = []
+      if (justMastered) {
+        const summary = getGeoSummary()
+        toasts.push({ kind: 'geo', title: `${current.country} located!`, note: `${summary.mastered} / ${summary.total} on the map` })
+      }
+      enqueue([...toasts, ...achievementToasts(newAchievements)])
+      return
+    }
+
     const { justMastered, newAchievements } = recordCountry(current.iso2, isCorrect, nextStreak)
     const toasts = []
     if (justMastered) {
@@ -277,7 +292,7 @@ function Question({ mode, setMode }) {
       {toast &&
         <div className={styles.toast} key={`${toast.kind}-${toast.title}`}>
           <span className={styles.toastIcon}>
-            {toast.kind === 'achievement' ? <IconTrophy /> : toast.kind === 'capital' ? <IconPin /> : <IconGlobe />}
+            {toast.kind === 'achievement' ? <IconTrophy /> : toast.kind === 'capital' ? <IconPin /> : toast.kind === 'geo' ? <IconCompass /> : <IconGlobe />}
           </span>
           <span className={styles.toastText}>
             <span className={styles.toastTitle}>{toast.title}</span>

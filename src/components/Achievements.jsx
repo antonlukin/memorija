@@ -1,12 +1,13 @@
 import styles from './Achievements.module.scss'
 
 import { getAchievements } from '../storage'
-import { IconArrowLeft, IconCheck, IconTrophy, IconGlobe, IconFlame, IconStar, IconMap, IconPin } from './icons'
+import { IconArrowLeft, IconCheck, IconTrophy, IconGlobe, IconFlame, IconStar, IconMap, IconPin, IconCompass } from './icons'
 
 const GROUP_ICON = {
   collection: <IconGlobe />,
   continent: <IconMap />,
   capital: <IconPin />,
+  geo: <IconCompass />,
   streak: <IconFlame />,
   volume: <IconStar />,
 }

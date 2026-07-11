@@ -35,6 +35,11 @@ export const ACHIEVEMENTS = [
   { id: 'capital_100', group: 'capital', title: 'Capital Expert', desc: 'Master 100 capitals', current: (s) => s.capitalsMastered, target: () => 100 },
   { id: 'capital_all', group: 'capital', title: 'Capital Master', desc: 'Master every capital', current: (s) => s.capitalsMastered, target: (s) => s.capitalsTotal },
 
+  { id: 'geo_1', group: 'geo', title: 'Explorer', desc: 'Locate your first country on the map', current: (s) => s.geoMastered, target: () => 1 },
+  { id: 'geo_25', group: 'geo', title: 'Navigator', desc: 'Locate 25 countries on the map', current: (s) => s.geoMastered, target: () => 25 },
+  { id: 'geo_100', group: 'geo', title: 'Pathfinder', desc: 'Locate 100 countries on the map', current: (s) => s.geoMastered, target: () => 100 },
+  { id: 'geo_all', group: 'geo', title: 'Atlas', desc: 'Locate every country on the map', current: (s) => s.geoMastered, target: (s) => s.geoTotal },
+
   { id: 'streak_10', group: 'streak', title: 'On Fire', desc: 'Answer 10 in a row correctly', current: (s) => s.bestStreak, target: () => 10 },
   { id: 'streak_25', group: 'streak', title: 'Unstoppable', desc: 'Answer 25 in a row correctly', current: (s) => s.bestStreak, target: () => 25 },
   { id: 'streak_50', group: 'streak', title: 'Flawless Fifty', desc: 'Answer 50 in a row correctly', current: (s) => s.bestStreak, target: () => 50 },

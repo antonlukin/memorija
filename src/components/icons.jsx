@@ -71,6 +71,15 @@ export function IconMap() {
   )
 }
 
+export function IconCompass() {
+  return (
+    <svg viewBox="0 0 24 24" {...stroke} aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M16 8l-2.5 5.5L8 16l2.5-5.5z" />
+    </svg>
+  )
+}
+
 export function IconPin() {
   return (
     <svg viewBox="0 0 24 24" {...stroke} aria-hidden="true">

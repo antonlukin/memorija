@@ -1,4 +1,5 @@
 import dictionary from './dictionary'
+import { OUTLINES } from './outlines'
 import { evaluate, unlockedIds, ACHIEVEMENTS } from './achievements'
 
 const KEY = 'memorija.progress.v1'
@@ -86,6 +87,7 @@ function defaults() {
   return {
     countries: {},
     capitals: {},
+    geo: {},
     meta: { totalCorrect: 0, totalAnswered: 0, bestStreak: 0, unlocked: [] },
   }
 }
@@ -104,6 +106,7 @@ function load() {
     return {
       countries: legacy ? raw : (isObject(raw.countries) ? raw.countries : {}),
       capitals: isObject(raw.capitals) ? raw.capitals : {},
+      geo: isObject(raw.geo) ? raw.geo : {},
       meta: {
         totalCorrect: numberOr(meta.totalCorrect, 0),
         totalAnswered: numberOr(meta.totalAnswered, 0),
@@ -132,6 +135,10 @@ export function getCapitalProgress() {
   return load().capitals
 }
 
+export function getGeoProgress() {
+  return load().geo
+}
+
 export function isMastered(entry) {
   return !!entry && entry.correct >= MASTER_AT
 }
@@ -155,6 +162,28 @@ function summarizeCapitals(data) {
 
 export function getCapitalSummary() {
   return summarizeCapitals(load())
+}
+
+// Map mode has its own mastery track over the countries that have a context map.
+function summarizeGeo(data) {
+  let mastered = 0
+  let total = 0
+
+  for (const country of dictionary) {
+    if (!OUTLINES.has(country.iso2)) {
+      continue
+    }
+    total += 1
+    if (isMastered(data.geo[country.iso2])) {
+      mastered += 1
+    }
+  }
+
+  return { mastered, total }
+}
+
+export function getGeoSummary() {
+  return summarizeGeo(load())
 }
 
 function summarize(data) {
@@ -184,6 +213,7 @@ function summarize(data) {
 function statsFrom(data) {
   const summary = summarize(data)
   const capitals = summarizeCapitals(data)
+  const geo = summarizeGeo(data)
   return {
     mastered: summary.mastered,
     total: summary.total,
@@ -192,6 +222,8 @@ function statsFrom(data) {
     totalCorrect: data.meta.totalCorrect,
     capitalsMastered: capitals.mastered,
     capitalsTotal: capitals.total,
+    geoMastered: geo.mastered,
+    geoTotal: geo.total,
   }
 }
 
@@ -278,6 +310,35 @@ export function recordCapital(iso2, correct, streak) {
   }
   data.meta.totalAnswered += 1
   data.capitals[iso2] = entry
+
+  if (typeof streak === 'number') {
+    data.meta.bestStreak = Math.max(data.meta.bestStreak, streak)
+  }
+
+  const newAchievements = syncAchievements(data)
+  persist(data)
+
+  return {
+    justMastered: !wasMastered && entry.correct >= MASTER_AT,
+    newAchievements,
+  }
+}
+
+// Map answer — has its own mastery track (never touches country mastery), but
+// still counts toward the general streak/volume achievements.
+export function recordGeo(iso2, correct, streak) {
+  const data = load()
+  const entry = data.geo[iso2] || { correct: 0, wrong: 0 }
+  const wasMastered = entry.correct >= MASTER_AT
+
+  if (correct) {
+    entry.correct += 1
+    data.meta.totalCorrect += 1
+  } else {
+    entry.wrong += 1
+  }
+  data.meta.totalAnswered += 1
+  data.geo[iso2] = entry
 
   if (typeof streak === 'number') {
     data.meta.bestStreak = Math.max(data.meta.bestStreak, streak)
