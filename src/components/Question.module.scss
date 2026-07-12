@@ -113,12 +113,24 @@
   display: flex;
   flex: 1 1 auto;
   flex-flow: column nowrap;
-  justify-content: center;
+  // `safe center` centres when it fits but falls back to the top when the
+  // content is taller than the viewport, so nothing gets cut off at the top.
+  justify-content: safe center;
   gap: 1.25rem;
 
   min-height: 0;
+  // When the window is too short for the prompt + options (landscape, split
+  // view, tiny windows) the middle scrolls, while the top bar and the action
+  // button below stay pinned. On normal screens it never scrolls.
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
 
   animation: enter 0.28s ease-out;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @keyframes enter {
@@ -140,7 +152,10 @@
 
 .prompt {
   display: flex;
-  flex: 0 1 auto;
+  // Keep its natural size instead of collapsing under flex pressure — when the
+  // window is too short the whole stage scrolls (see .stage) rather than the
+  // image shrinking to nothing and spilling over the options.
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
 
