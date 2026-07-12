@@ -72,3 +72,13 @@ body {
   overflow: hidden;
   overscroll-behavior: contain;
 }
+
+// On tall viewports (tablets, desktops) don't stretch the app to full height —
+// cap it and let the body centre it, so the top bar and bottom button no longer
+// sit glued to opposite screen edges with a big empty gap between them. Phones
+// are shorter than the threshold and keep filling the screen exactly as before.
+@media (min-height: 58rem) {
+  #root {
+    max-height: 50rem;
+  }
+}
