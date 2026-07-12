@@ -88,6 +88,7 @@ function Settings({ onBack }) {
             Made in 2026 by{' '}
             <a className={styles.link} href="https://lukin.me/" target="_blank" rel="noopener noreferrer" onClick={openAuthor}>Anton Lukin</a>
           </p>
+          <p className={styles.version}>v{__APP_VERSION__} · {__BUILD_HASH__}</p>
         </section>
       </div>
     </div>

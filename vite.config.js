@@ -1,11 +1,30 @@
+import { readFileSync } from 'node:fs'
+import { execSync } from 'node:child_process'
+
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url)))
+
+// Short commit hash of the build, so the version shown in the app pins the exact
+// deployed code. Falls back to "dev" outside a git checkout.
+const commit = (() => {
+  try {
+    return execSync('git rev-parse --short HEAD').toString().trim()
+  } catch {
+    return 'dev'
+  }
+})()
+
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+    __BUILD_HASH__: JSON.stringify(commit),
+  },
   plugins: [
     react(),
     svgr(),
